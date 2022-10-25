@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+        'rest_framework_simplejwt',
     'app',
 ]
 
@@ -62,9 +63,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
     ),
 }
 
@@ -103,9 +105,9 @@ DATABASES = {
 }
 
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000',
-)
+# CORS_ORIGIN_WHITELIST = (
+#     'localhost:3000',
+# )
 
 
 # Password validation
