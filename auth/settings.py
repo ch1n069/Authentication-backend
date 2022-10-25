@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'
+    'rest_framework',
+    'corsheaders',
+    'app',
 ]
 
 MIDDLEWARE = [
@@ -48,7 +50,23 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+     # ...
+    'corsheaders.middleware.CorsMiddleware', # Note that this needs to be placed above CommonMiddleware
+    'django.middleware.common.CommonMiddleware', # This should already exist
+    # ...
+    
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
 
 ROOT_URLCONF = 'auth.urls'
 
@@ -73,13 +91,21 @@ WSGI_APPLICATION = 'auth.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'auth',
+        'USER': 'bruno',
+        'PASSWORD': 'newpassword',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
+
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000',
+)
 
 
 # Password validation
